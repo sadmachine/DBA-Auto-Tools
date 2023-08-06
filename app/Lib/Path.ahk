@@ -1,7 +1,7 @@
 ; === Script Information =======================================================
 ; Name .........: Path
 ; Description ..: Path Utilities
-; AHK Version ..: 1.1.36.02 (Unicode 64-bit)
+; AHK Version ..: 2.0.2 (Unicode 64-bit)
 ; Start Date ...: 08/04/2023
 ; OS Version ...: Windows 10
 ; Language .....: English - United States (en-US)
@@ -15,7 +15,7 @@
 ;
 ; === TO-DOs ===================================================================
 ; ==============================================================================
-#Include DriveMap.ahk
+#Include Vendor/DriveMap.ahk
 
 class Path
 {

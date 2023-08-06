@@ -15,6 +15,8 @@
 ;
 ; ==== TO-DOs ==================================================================
 ; TODO - Abstract out to a controller and a view
+; TODO - Move as much configuration stuff into the .json file as possible
+; TODO - Generalize logic where possible
 ; ==============================================================================
 class Dashboard
 {
@@ -84,7 +86,7 @@ class Dashboard
     static show()
     {
         this.guiObj.Title := this.configObj["title"]
-        this.guiObj.Show("h" this.height " w" this.width " x" this.display_x " y" this.display_y)
+        this.guiObj.Show("x" this.display_x " y" this.display_y)
         ; Need to set the parent of the gui to the "DBA NG Sub-Assy Jobs" program
 
         ; This makes it so our dashboard moves with the parent window, and acts like its part of the program
@@ -96,6 +98,36 @@ class Dashboard
         DllCall("RemoveMenu", "Int", hSysMenu, "Uint", nCnt - 1, "Uint", "0x400")
         DllCall("RemoveMenu", "Int", hSysMenu, "Uint", nCnt - 2, "Uint", "0x400")
         DllCall("DrawMenuBar", "Int", this.hwnd["child"])
+
+        x := y := width := height := 0
+
+        this.guiObj.GetClientPos(&x, &y, &width, &height)
+
+        if ((width - (this.configObj["marginX"] * 2)) < this.configObj["minWidth"]) {
+            this.setClientPos(this.display_x, this.display_y, this.configObj["minWidth"])
+        }
+        if ((height - (this.configObj["marginY"] * 2)) < this.configObj["minHeight"]) {
+            this.setClientPos(this.display_x, this.display_y, , this.configObj["minHeight"])
+        }
+        this.guiObj.GetClientPos(&x, &y, &width, &height)
+    }
+
+    static setClientPos(x?, y?, width?, height?)
+    {
+        ; Account for exterior dimensions in width/height setting
+        borderWidthX := SysGet(SM_CXBORDER := 5)
+        borderWidthY := SysGet(SM_CYBORDER := 6)
+        titleBarHeight := SysGet(SM_CYSIZE := 30)
+        if (IsSet(width)) {
+            width += borderWidthX * 2
+        }
+
+        if (IsSet(height)) {
+            height += titleBarHeight + (borderWidthY * 2)
+        }
+
+        ; Set the position/dimensions
+        this.guiObj.move(x?, y?, width?, height?)
     }
 
     static destroyOnClose()
@@ -107,9 +139,9 @@ class Dashboard
 
     static _addActions()
     {
-        for key, value in this.configObj["actions"] {
-            label := value["label"]
-            action := this.guiObj.Add("Button", "", label)
+        for key, action in this.configObj["actions"] {
+            label := action["label"]
+            action := this.guiObj.Add("Button", action["options"], action["label"])
             action.OnEvent("Click", "handleAction")
         }
     }
@@ -128,15 +160,12 @@ class Dashboard
     ; _setupApplicationMenu()
     ; {
     ;     global
-
     ;     ; Get a reference to our events
     ;     openSettingsEvent := ObjBindMethod(this.Events, "openSettings")
-
     ;     ; Gui Menu setup
     ;     DashboardMenuBar := Menu()
     ;     DashboardMenuBar.Add("&Settings", openSettingsEvent)
     ;     this.guiObj.MenuBar := DashboardMenuBar
-
     ; }
 
     ; _setupTrayMenu()
@@ -145,7 +174,6 @@ class Dashboard
     ;     openSettingsEvent := ObjBindMethod(this.Events, "openSettings")
     ;     applicationLogEvent := ObjBindMethod(this.Events, "applicationLog")
     ;     exitProgramEvent := ObjBindMethod(this.Events, "exitProgram")
-
     ;     ; Tray Menu Setup
     ;     Tray := A_TrayMenu
     ;     Tray.Delete() ; V1toV2: not 100% replacement of NoStandard, Only if NoStandard is used at the beginning
@@ -155,7 +183,6 @@ class Dashboard
     ;     Tray.Add("Advanced", AdvancedSubMenu)
     ;     Tray.Add("Exit", exitProgramEvent)
     ; }
-
     class Events {
 
         actions := Object()
@@ -173,5 +200,4 @@ class Dashboard
             Run(executable)
         }
     }
-
 }

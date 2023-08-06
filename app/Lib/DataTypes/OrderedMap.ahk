@@ -1,6 +1,6 @@
 ; === Script Information =======================================================
 ; Name .........: Ordered Map
-; Description ..: A Map implementation which respects
+; Description ..: A Map implementation which keeps ordering of keys
 ; AHK Version ..: 2.0.2 (Unicode 64-bit)
 ; Start Date ...: 08/01/2023
 ; OS Version ...: Windows 10

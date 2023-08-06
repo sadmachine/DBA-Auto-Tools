@@ -1,7 +1,7 @@
 ﻿; === Script Information =======================================================
 ; Name .........: DBA.RecordSet
 ; Description ..: Handles a set of ActiveRecords returned from the database
-; AHK Version ..: 1.1.36.02 (Unicode 64-bit)
+; AHK Version ..: 2.0.2 (Unicode 64-bit)
 ; Start Date ...: 04/19/2023
 ; OS Version ...: Windows 10
 ; Language .....: English - United States (en-US)
