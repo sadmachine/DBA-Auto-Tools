@@ -8,12 +8,7 @@
         {
             "label": "Job Receipts",
             "file": "Job Receipts.ahk",
-            "options": "w400"
-        },
-        {
-            "label": "Test Program with a really long label that shouldn't fit",
-            "file": "test program.ahk",
-            "options": "w400"
+            "options": "w150"
         }
     ]
 }
