@@ -12,6 +12,7 @@
 ; ==== Revision History ========================================================
 ; Revision 1 (08/05/2023)
 ; * Copy from old repo, convert to ahk v2
+; * Fix DBA.Window variable references
 ;
 ; ==== TO-DOs ==================================================================
 ; TODO - Abstract out to a controller and a view
@@ -58,9 +59,9 @@ class Dashboard
         this.display_y := 74
 
         ; Wait for the Main DBA window to be active
-        WinWait(DBA.Windows.Main)
-        WinActivate(DBA.Windows.Main)
-        WinWaitActive(DBA.Windows.Main)
+        WinWait(DBA.Windows.WIN_MAIN)
+        WinActivate(DBA.Windows.WIN_MAIN)
+        WinWaitActive(DBA.Windows.WIN_MAIN)
 
         ; Build the dashboard
         this.guiObj := Gui(, , Dashboard.Events(this.actions))
@@ -73,7 +74,7 @@ class Dashboard
         this.guiObj.Opt("+OwnDialogs +AlwaysOnTop")
 
         ; Get a reference to the "parent" and "child" window
-        this.hwnd["parent"] := WinExist(DBA.Windows.Main)
+        this.hwnd["parent"] := WinExist(DBA.Windows.WIN_MAIN)
         this.hwnd["child"] := this.guiObj.hwnd
 
         this.built := true
@@ -132,7 +133,7 @@ class Dashboard
 
     static destroyOnClose()
     {
-        WinWaitClose(DBA.Windows.Main)
+        WinWaitClose(DBA.Windows.WIN_MAIN)
         this.guiObj.Destroy()
         this.built := false
     }

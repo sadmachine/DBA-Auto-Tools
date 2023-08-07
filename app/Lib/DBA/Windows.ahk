@@ -12,15 +12,16 @@
 ; ==== Revision History ========================================================
 ; Revision 1 (08/06/2023)
 ; * Added This Banner
+; * Update naming convention for window constants
 ;
 ; ==== TO-DOs ==================================================================
 ; ==============================================================================
 class Windows {
     static DBA_EXE := "ahk_exe ejsme.exe"
-    static Main := "ahk_exe ejsme.exe ahk_class TfrmAppMain"
-    static POReceiptLookup := "ahk_exe ejsme.exe ahk_class TFrmPopDrpPORecLook"
-    static POReceipts := "ahk_exe ejsme.exe ahk_class TFrmPOReceipts"
-    static JobReceipts := "ahk_exe ejsme.exe ahk_class "
+    static WIN_MAIN := "ahk_exe ejsme.exe ahk_class TfrmAppMain"
+    static WIN_PO_RECEIPT_LOOKUP := "ahk_exe ejsme.exe ahk_class TFrmPopDrpPORecLook"
+    static WIN_PO_RECEIPTS := "ahk_exe ejsme.exe ahk_class TFrmPOReceipts"
+    static WIN_JOB_RECEIPTS := "ahk_exe ejsme.exe ahk_class TFrmJobReceipts"
 
     static MenuOpen(menuPath)
     {
