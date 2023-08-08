@@ -25,6 +25,7 @@
 #Include <DBA>
 #Include <Vendor/Json>
 #Include <Path>
+#Include <UI>
 
 ; --- Local includes -----------------------------------------------------------
 #Include src/Dashboard.ahk

@@ -16,10 +16,16 @@
 ; ==== TO-DOs ==================================================================
 ; ==============================================================================
 #Include bootstrap/autoload.ahk
+#Include src/Views/NoInput.ahk
+
+UI.Base.defaultFont := Map("options", "S12", "fontName", "Segoe UI")
 
 jobNumber := GetJobNumber()
 
 quantities := GetQuantities()
+
+noInputGui := NoInput("Automation in Progress", "AlwaysOnTop ToolWindow")
+noInputGui.Show()
 
 AssertDbaExists()
 
@@ -31,12 +37,21 @@ EnterJobNumber(jobNumber)
 
 EnterQuantitiesAndLocations(quantities)
 
+noInputgui.Destroy()
+
+ExitApp
+
+
+; --- Function Definitions -----------------------------------------------------
 
 GetJobNumber()
 {
-    result := InputBox("Enter the Job #", "Job Number")
+    stringDialog := UI.StringDialog("Job Number")
+    stringDialog.setFont("S12")
 
-    if (result.result != "OK") {
+    result := stringDialog.prompt("Enter the Job #")
+
+    if (result.canceled) {
         ExitApp
     }
 
@@ -45,15 +60,22 @@ GetJobNumber()
 
 GetQuantities()
 {
-    resultGood := InputBox("Enter the Quantity Good", "Quantity Good")
+    valueRange := Map("min", 0, "max", 100000)
+    numberDialog := UI.NumberDialog("Quantity Good", valueRange)
+    numberDialog.setFont("S12")
 
-    if (resultGood.result != "OK") {
+    resultGood := numberDialog.prompt("Enter the Quantity Good")
+
+    if (resultGood.canceled) {
         ExitApp
     }
 
-    resultScrap := InputBox("enter the Quantity Scrap", "Quantity Scrap")
+    numberDialog := UI.NumberDialog("Quantity Scrap", valueRange)
+    numberDialog.setFont("S12")
 
-    if (resultScrap.result != "OK") {
+    resultScrap := numberDialog.prompt("Enter the Quantity Scrap")
+
+    if (resultScrap.canceled) {
         ExitApp
     }
 
@@ -110,8 +132,17 @@ EnterQuantitiesAndLocations(quantities)
     ControlSendText(quantities["scrap"], "TdxDBGrid1", DBA.Windows.WIN_JOB_RECEIPTS)
     Sleep(100)
     Send("{Tab}")
+    Sleep(100)
     Send("NCMR-")
+    Sleep(100)
     Send("{Enter}")
+    Sleep(100)
+    Send("{Alt Down}u{Alt Up}")
+    Sleep(100)
+    WinClose(DBA.Windows.WIN_JOB_RECEIPTS)
+    if (!WinWaitClose(DBA.Windows.WIN_JOB_RECEIPTS, unset, 5)) {
+        MsgBox("There was an issue closing the 'Job Receipts' window. Please check that the transaction was saved and close the window manually.", "Job Receipts", "Icon!")
+    }
 }
 
 ControlExist(Control, WinTitle := "", WinText := "", ExcludeTitle := "", ExcludeText := "") {

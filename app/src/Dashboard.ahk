@@ -102,33 +102,14 @@ class Dashboard
 
         x := y := width := height := 0
 
-        this.guiObj.GetClientPos(&x, &y, &width, &height)
+        this.guiObj.GetClientPos(unset, unset, &width, &height)
 
         if ((width - (this.configObj["marginX"] * 2)) < this.configObj["minWidth"]) {
-            this.setClientPos(this.display_x, this.display_y, this.configObj["minWidth"])
+            UI.setClientPos(this.guiObj, this.display_x, this.display_y, this.configObj["minWidth"])
         }
         if ((height - (this.configObj["marginY"] * 2)) < this.configObj["minHeight"]) {
-            this.setClientPos(this.display_x, this.display_y, , this.configObj["minHeight"])
+            UI.setClientPos(this.guiObj, this.display_x, this.display_y, unset, this.configObj["minHeight"])
         }
-        this.guiObj.GetClientPos(&x, &y, &width, &height)
-    }
-
-    static setClientPos(x?, y?, width?, height?)
-    {
-        ; Account for exterior dimensions in width/height setting
-        borderWidthX := SysGet(SM_CXBORDER := 5)
-        borderWidthY := SysGet(SM_CYBORDER := 6)
-        titleBarHeight := SysGet(SM_CYSIZE := 30)
-        if (IsSet(width)) {
-            width += borderWidthX * 2
-        }
-
-        if (IsSet(height)) {
-            height += titleBarHeight + (borderWidthY * 2)
-        }
-
-        ; Set the position/dimensions
-        this.guiObj.move(x?, y?, width?, height?)
     }
 
     static destroyOnClose()
