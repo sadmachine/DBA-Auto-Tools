@@ -24,7 +24,9 @@ class NoInput extends UI.Base
         this.SetFont("S20")
         this.MarginX := 10
         this.MarginY := 10
-        this.add("Text", "cRed", "!!! Automation in Progress, Do not touch the keyboard or mouse !!!")
+        this.add("Text", "cRed w350 Center", "!!! Automation in Progress !!!")
+        this.SetFont("S15")
+        this.add("Text", "cBlack w350 Center", "Do not touch the keyboard or mouse")
 
         super.build()
     }
