@@ -178,7 +178,6 @@ class Dashboard
         {
             action := this.actions[GuiCtrlObj.Text]
             executable := Path.makeAbsolute(action["file"])
-            MsgBox(executable)
             Run(executable)
         }
     }
