@@ -17,6 +17,7 @@
 ; ==============================================================================
 #Include bootstrap/autoload.ahk
 #Include src/Views/NoInput.ahk
+#Include src/Views/ReceiptQuantityDialog.ahk
 
 UI.Base.defaultFont := Map("options", "S12", "fontName", "Segoe UI")
 
@@ -24,10 +25,13 @@ jobNumber := GetJobNumber()
 
 quantities := GetQuantities()
 
-noInputGui := NoInput("Automation in Progress", "AlwaysOnTop ToolWindow")
-noInputGui.Show()
 
 AssertDbaExists()
+
+AssertJobReceiptsNotAlreadyOpen()
+
+noInputGui := NoInput("Automation in Progress", "AlwaysOnTop ToolWindow")
+noInputGui.Show()
 
 ActivateDba()
 
@@ -38,6 +42,12 @@ EnterJobNumber(jobNumber)
 EnterQuantitiesAndLocations(quantities)
 
 noInputgui.Destroy()
+
+result := MsgBox("Receive on another job?", unset, "YesNo Icon? 0x40000")
+
+if (result == "Yes") {
+    Reload
+}
 
 ExitApp
 
@@ -60,28 +70,16 @@ GetJobNumber()
 
 GetQuantities()
 {
-    valueRange := Map("min", 0, "max", 100000)
-    numberDialog := UI.NumberDialog("Quantity Good", valueRange)
-    numberDialog.setFont("S12")
+    quantities := ReceiptQuantityDialog("Job Quantities")
+    results := quantities.prompt(0, 10000)
 
-    resultGood := numberDialog.prompt("Enter the Quantity Good")
-
-    if (resultGood.canceled) {
-        ExitApp
-    }
-
-    numberDialog := UI.NumberDialog("Quantity Scrap", valueRange)
-    numberDialog.setFont("S12")
-
-    resultScrap := numberDialog.prompt("Enter the Quantity Scrap")
-
-    if (resultScrap.canceled) {
+    if (results.canceled) {
         ExitApp
     }
 
     quantities := Map()
-    quantities["good"] := resultGood.value
-    quantities["scrap"] := resultScrap.value
+    quantities["good"] := results.values["quantityGood"]
+    quantities["scrap"] := results.values["quantityScrap"]
     return quantities
 }
 
@@ -97,11 +95,14 @@ ActivateDba()
     WinActivate(DBA.Windows.WIN_MAIN)
 }
 
-OpenJobReceiptsWindow()
-{
+AssertJobReceiptsNotAlreadyOpen() {
     while (WinExist(DBA.Windows.WIN_JOB_RECEIPTS)) {
         MsgBox("The 'Job Receipts' window is already open. Please make sure your work is saved and close the 'Job Receipts' window, then click 'Ok' to continue.", "Job Receipts", "Iconi " ALWAYS_ON_TOP := 0x40000)
     }
+}
+
+OpenJobReceiptsWindow()
+{
     DBA.Windows.MenuOpen("Jobs.Job Receipts")
     if (!WinWaitActive(DBA.Windows.WIN_JOB_RECEIPTS, , 5)) {
         throw Error("WindowException", A_ThisFunc, "The 'Job Receipts' window never became active.", A_LineFile, A_LineNumber)
@@ -122,14 +123,15 @@ EnterJobNumber(jobNumber)
 
 EnterQuantitiesAndLocations(quantities)
 {
-    while (!ControlExist("TdxDBGrid1", DBA.Windows.WIN_JOB_RECEIPTS)) {
-        Sleep(100)
-    }
-    ControlSendText(quantities["good"], "TdxDBGrid1", DBA.Windows.WIN_JOB_RECEIPTS)
+    WinActivate(DBA.Windows.WIN_JOB_RECEIPTS)
+    Send("{Tab}")
     Sleep(100)
-    ControlSend("{Down}", "TdxDBGrid1", DBA.Windows.WIN_JOB_RECEIPTS)
+    Send("{Tab}")
+    Send(quantities["good"])
     Sleep(100)
-    ControlSendText(quantities["scrap"], "TdxDBGrid1", DBA.Windows.WIN_JOB_RECEIPTS)
+    Send("{Down}")
+    Sleep(100)
+    Send(quantities["scrap"])
     Sleep(100)
     Send("{Tab}")
     Sleep(100)
