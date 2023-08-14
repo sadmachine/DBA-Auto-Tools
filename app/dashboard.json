@@ -7,7 +7,7 @@
     "actions": [
         {
             "label": "Job Receipts",
-            "file": "Job Receipts.ahk",
+            "file": "Job Receipts.exe",
             "options": "w150"
         }
     ]
