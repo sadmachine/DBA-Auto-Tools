@@ -22,10 +22,10 @@
 #Include ../
 
 ; --- Library includes ---------------------------------------------------------
-#Include <DBA>
-#Include <Vendor/Json>
-#Include <Path>
-#Include <UI>
+#Include <v2/DBA>
+#Include <v2/Vendor/Json>
+#Include <v2/Path>
+#Include <v2/UI>
 
 ; --- Local includes -----------------------------------------------------------
 #Include src/Dashboard.ahk
