@@ -36,7 +36,10 @@ if errorlevel 1 (
 %COMPILER% /base %BINFILE% /in "%CD%\app\main.ahk" /out "%CD%\dist\DBA AutoTools.exe" /icon "%CD%\assets\Prag Logo.ico" 
 %COMPILER% /base %BINFILE% /in "%CD%\app\Job Receipts.ahk" /out "%CD%\dist\app\modules\Job Receipts.exe" /icon "%CD%\assets\Prag Logo.ico" 
 %COMPILER% /base %BINFILE% /in "%CD%\app\ClientInstaller.ahk" /out "%CD%\dist\client\ClientInstall.exe" /icon "%CD%\assets\Installer.ico" 
-%COMPILER% /base %BINFILE% /in "%CD%\app\ServerInstaller.ahk" /out "%CD%\installers\DBA-AutoTools-ServerInstall-%CURRENT_VERSION%.exe" /icon "%CD%\assets\Installer.ico" 
+mkdir "%CD%\installers\DBA-AutoTools-%CURRENT_VERSION%"
+mkdir "%CD%\installers\DBA-AutoTools-%CURRENT_VERSION%\assets"
+copy "%CD%\assets\Prag Logo.ico" "%CD%\installers\DBA-AutoTools-%CURRENT_VERSION%\assets"
+%COMPILER% /base %BINFILE% /in "%CD%\app\ServerInstaller.ahk" /out "%CD%\installers\DBA-AutoTools-%CURRENT_VERSION%\DBA-AutoTools-ServerInstall-%CURRENT_VERSION%.exe" /icon "%CD%\assets\Installer.ico" 
 
 :: Reset the prompt
 @PROMPT %OLDPROMPT%
