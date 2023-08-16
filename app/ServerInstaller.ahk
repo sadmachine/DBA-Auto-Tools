@@ -19,6 +19,9 @@
 ; Directives
 #Requires AutoHotkey >=2.0
 
+; Includes
+#Include <v2/UI>
+
 class ServerInstaller extends UI.Installer
 {
     registerPages()
