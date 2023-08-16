@@ -4,20 +4,15 @@ class SelectInstallationPath extends UI.InstallerPage
 {
     build()
     {
-        if (this.built) {
-            return
-        }
-        this.parent.GetClientPos(unset, unset, &width)
-        width := width - this.parent.marginX - 20
-        this.guiObj := Gui(this.options, "test", this)
-        this.guiObj.Add("Text", "w" width, "You are installating the Server version of DBA AutoTools. Make sure to install this on a central location that all clients will have access to over the network. Its recommended to install it in the DBA Manufacturing directory in a subfolder, as all DBA Clients need access to that location anyways.")
-        this.guiObj.Add("Text", "w" width, "Installation Location")
-        this.fields["edtInstallationPath"] := this.guiObj.Add("Edit", "w" width - 60, "")
+        this.guiObj := Gui(this.options, unset, this)
+        this.guiObj.Add("Text", "w" this.width, "You are installating the Server version of DBA AutoTools. Make sure to install this on a central location that all clients will have access to over the network. Its recommended to install it in the DBA Manufacturing directory in a subfolder, as all DBA Clients need access to that location anyways.")
+        this.guiObj.Add("Text", "w" this.width, "Installation Location")
+        this.fields["edtInstallationPath"] := this.guiObj.Add("Edit", "w" this.width - 60, "")
         this.fields["edtInstallationPath"].OnEvent("Change", "editInstallationPath_change")
         this.actions["btnBrowse"] := this.guiObj.Add("Button", "w60 yp-1 x+5", "Browse")
         this.actions["btnBrowse"].OnEvent("Click", "btnBrowse_click")
 
-        this.built := true
+        super.build()
     }
 
 
