@@ -18,4 +18,4 @@
 #Include bootstrap/main.ahk
 
 
-Dashboard.initialize("dashboard.json")
+Dashboard.initialize("app/dashboard.json")

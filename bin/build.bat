@@ -24,37 +24,19 @@ if errorlevel 1 (
   echo ^> Killing existing 'DBA AutoTools.exe' process...
 )
 
-:: Kill existing processes that will affect builds
-tasklist /fi "imagename eq QueueManager.exe" |find ":" > nul
+tasklist /fi "imagename eq Job Receipts.exe" |find ":" > nul
 if errorlevel 1 (
-  taskkill /f /im "QueueManager.exe"
-  echo ^> Killing existing 'QueueManager.exe' process...
+  taskkill /f /im "Job Receipts.exe"
+  echo ^> Killing existing 'Job Receipts.exe' process...
 )
 
-tasklist /fi "imagename eq PO_Verification.exe" |find ":" > nul
-if errorlevel 1 (
-  taskkill /f /im "PO_Verification.exe"
-  echo ^> Killing existing 'PO_Verification.exe' process...
-)
-
-tasklist /fi "imagename eq tmp.exe" |find ":" > nul
-if errorlevel 1 (
-  taskkill /f /im "tmp.exe"
-  echo ^> Killing existing 'tmp.exe' process...
-)
-if errorlevel 1 taskkill /f /im "tmp.exe"
-
-tasklist /fi "imagename eq Settings.exe" |find ":" > nul
-if errorlevel 1 (
-  taskkill /f /im "Settings.exe"
-  echo ^> Killing existing 'Settings.exe' process...
-)
 
 @echo on
 :: Build both AHK files to EXEs
 %COMPILER% /base %BINFILE% /in "%CD%\app\main.ahk" /out "%CD%\dist\DBA AutoTools.exe" /icon "%CD%\assets\Prag Logo.ico" 
 %COMPILER% /base %BINFILE% /in "%CD%\app\Job Receipts.ahk" /out "%CD%\dist\app\modules\Job Receipts.exe" /icon "%CD%\assets\Prag Logo.ico" 
-%COMPILER% /base %BINFILE% /in "%CD%\app\Installer.ahk" /out "%CD%\installers\Installer-DBA-AutoTools-%CURRENT_VERSION%.exe" /icon "%CD%\assets\Installer.ico" 
+%COMPILER% /base %BINFILE% /in "%CD%\app\ClientInstaller.ahk" /out "%CD%\dist\client\ServerInstaller-DBA-AutoTools-%CURRENT_VERSION%.exe" /icon "%CD%\assets\Installer.ico" 
+%COMPILER% /base %BINFILE% /in "%CD%\app\ServerInstaller.ahk" /out "%CD%\installers\ServerInstaller-DBA-AutoTools-%CURRENT_VERSION%.exe" /icon "%CD%\assets\Installer.ico" 
 
 :: Reset the prompt
 @PROMPT %OLDPROMPT%
