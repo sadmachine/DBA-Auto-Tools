@@ -72,7 +72,7 @@ class InstallationProgressPage extends UI.InstallerPage
 
     build()
     {
-        this.fields["prgComplete"] := this.Add("Progress", "Range0-8 h20 w" this.width, 0)
+        this.fields["prgComplete"] := this.Add("Progress", "Range0-9 h20 w" this.width, 0)
         this.fields["edtActionLog"] := this.Add("Edit", "+ReadOnly h" (this.height - 30) " w" this.width)
         super.build()
     }
@@ -153,6 +153,7 @@ class InstallationProgressPage extends UI.InstallerPage
         dashboardJson := Path.concat(this.paths["app"], "dashboard.json")
         settingsIni := Path.concat(this.paths["app"], "settings.ini")
         clientInstallExe := Path.concat(this.paths["client"], "ClientInstall.exe")
+        pragLogoIco := Path.concat(this.paths["app"], "Prag Logo.ico")
 
         FileInstall("../dist/DBA AutoTools.exe", dbaAutoToolsExe, 1)
         this.logAction("`t" dbaAutoToolsExe)
@@ -165,6 +166,9 @@ class InstallationProgressPage extends UI.InstallerPage
         this.incrementProgress()
         FileInstall("../dist/app/settings.ini", settingsIni, 1)
         this.logAction("`t" settingsIni)
+        this.incrementProgress()
+        FileInstall("../assets/Prag Logo.ico", pragLogoIco, 1)
+        this.logAction("`t" pragLogoIco)
         this.incrementProgress()
         FileInstall("../dist/client/ClientInstall.exe", clientInstallExe, 1)
         this.logAction("`t" clientInstallExe)
