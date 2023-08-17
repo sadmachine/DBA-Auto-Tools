@@ -19,8 +19,8 @@
 #Include src/views/ServerInstaller.ahk
 
 if (A_IsCompiled) {
-    versionStr := SubStr(A_ScriptName, 28)
-    versionStr := SubStr(versionStr, 0, -4)
+    versionStr := SubStr(A_ScriptName, 29)
+    versionStr := StrSplit(versionStr, ".exe")[1]
     assetStr := "assets/Prag Logo.ico"
 } else {
     versionStr := "x.x.x"
