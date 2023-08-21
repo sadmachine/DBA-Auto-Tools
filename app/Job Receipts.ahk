@@ -18,6 +18,7 @@
 #Include bootstrap/autoload.ahk
 #Include src/Views/NoInput.ahk
 #Include src/Views/ReceiptQuantityDialog.ahk
+#Include <v2/DBA>
 
 UI.Base.defaultFont := Map("options", "S12", "fontName", "Segoe UI")
 
@@ -61,16 +62,38 @@ ExitApp
 
 GetJobNumber()
 {
-    stringDialog := UI.StringDialog("Job Number")
-    stringDialog.setFont("S12")
+    database := IniRead("../settings.ini", "firebird", "Database")
 
-    result := stringDialog.prompt("Enter the Job #")
+    connectionStr := "Driver=Firebird/InterBase(r) driver;Database=" database ";User=SYSDBA;Password=masterkey;"
 
-    if (result.canceled) {
-        ExitApp
+    valid := false
+    while (!valid) {
+        stringDialog := UI.StringDialog("Job Number")
+        stringDialog.setFont("S12")
+
+        result := stringDialog.prompt("Enter the Job #")
+
+        if (result.canceled) {
+            ExitApp
+        }
+
+        jobNumber := result.value
+
+        DB := DBA.DbConnection(connectionStr)
+        results := DB.query("SELECT jobno, jobstats FROM jobs WHERE jobno='" jobNumber "'")
+        if (results.count() != 1) {
+            MsgBox("The Job # you entered (" jobNumber ") is not valid, please enter another.", "Job # Error", "Icon!")
+            continue
+        }
+
+        if (results.row(1)["JOBSTATS"] != 'RELEASED') {
+            MsgBox("The Job # you entered (" jobNumber ") has status " results[1]["jobstats"] ", but status must be RELEASED.`nPlease release the job or try another Job #.", "Job # Error", "Icon!")
+            continue
+        }
+        valid := true
     }
 
-    return result.value
+    return jobNumber
 }
 
 GetQuantities()
