@@ -1,3 +1,2 @@
-*.exe
 /dist/*.exe
 /dist/**/*.exe
