@@ -21,6 +21,9 @@
 
 UI.Base.defaultFont := Map("options", "S12", "fontName", "Segoe UI")
 
+SetControlDelay(100)
+SetKeyDelay(50)
+
 jobNumber := GetJobNumber()
 
 quantities := GetQuantities()
@@ -32,6 +35,8 @@ AssertJobReceiptsNotAlreadyOpen()
 
 noInputGui := NoInput("Automation in Progress", "AlwaysOnTop ToolWindow")
 noInputGui.Show()
+
+Sleep 300
 
 ActivateDba()
 
@@ -115,33 +120,44 @@ EnterJobNumber(jobNumber)
     ControlGetPos(&posX, &posY, &width, &height, "TdxDBButtonEdit1", DBA.Windows.WIN_JOB_RECEIPTS)
     yClick := Integer(posY + height / 2)
     xClick := posX + width - 15
+    BlockInput("MouseMove")
     MouseMove(xClick, yClick)
     MouseClick
-    Send(jobNumber)
-    Send("{Enter}")
+    BlockInput("MouseMoveOff")
+    hwnd := WinWaitActive("ahk_class TfrmDropDownSubFrm")
+    WinExist(hwnd)
+    ControlSend(jobNumber)
+    ControlSend("{Enter}")
 }
 
 EnterQuantitiesAndLocations(quantities)
 {
-    WinActivate(DBA.Windows.WIN_JOB_RECEIPTS)
-    Send("{Tab}")
-    Sleep(100)
-    Send("{Tab}")
-    Send(quantities["good"])
-    Sleep(100)
-    Send("{Down}")
-    Sleep(100)
-    Send(quantities["scrap"])
-    Sleep(100)
-    Send("{Tab}")
-    Sleep(100)
-    Send("NCMR-")
-    Sleep(100)
-    Send("{Enter}")
-    Sleep(100)
-    Send("{Alt Down}u{Alt Up}")
-    Sleep(100)
+    hwnd := WinExist(DBA.Windows.WIN_JOB_RECEIPTS)
+    while (!ControlExist("TdxDBGrid1", hwnd)) {
+    }
+    ControlFocus("TdxDBGrid1")
+    ControlSend(quantities["good"], "TdxDBGrid1")
+    ControlSend("{Down}", "TdxDBGrid1")
+    ControlSend(quantities["scrap"], "TdxDBGrid1")
+    ControlSend("{Tab}", "TdxDBGrid1")
+    ControlSend("NCMR-", "TdxDBGrid1")
+    ControlSend("{Enter}", "TdxDBGrid1")
+    ControlSend("{Alt Down}u{Alt Up}")
+
     WinClose(DBA.Windows.WIN_JOB_RECEIPTS)
+    
+    count := 0
+    while (WinWait("Warning", unset, 1)) {
+        WinActivate()
+        Send("u")
+        WinExist(DBA.Windows.WIN_JOB_RECEIPTS)
+        ControlSend("{Alt Down}u{Alt Up}")
+        count++
+        if (count >= 5) {
+            Break
+        }
+    }
+
     if (!WinWaitClose(DBA.Windows.WIN_JOB_RECEIPTS, unset, 5)) {
         MsgBox("There was an issue closing the 'Job Receipts' window. Please check that the transaction was saved and close the window manually.", "Job Receipts", "Icon!")
     }
