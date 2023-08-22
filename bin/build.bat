@@ -40,6 +40,8 @@ mkdir "%CD%\installers\DBA-AutoTools-%CURRENT_VERSION%"
 mkdir "%CD%\installers\DBA-AutoTools-%CURRENT_VERSION%\assets"
 copy "%CD%\assets\Prag Logo.ico" "%CD%\installers\DBA-AutoTools-%CURRENT_VERSION%\assets"
 %COMPILER% /base %BINFILE% /in "%CD%\app\ServerInstaller.ahk" /out "%CD%\installers\DBA-AutoTools-%CURRENT_VERSION%\DBA-AutoTools-ServerInstall-%CURRENT_VERSION%.exe" /icon "%CD%\assets\Installer.ico" 
+"C:\Program Files\7-Zip\7z.exe" a -tzip "%CD%\installers\DBA-AutoTools-%CURRENT_VERSION%.zip" "%CD%\installers\DBA-AutoTools-%CURRENT_VERSION%"
+rmdir /S /Q "%CD%\installers\DBA-AutoTools-%CURRENT_VERSION%" 
 
 :: Reset the prompt
 @PROMPT %OLDPROMPT%
