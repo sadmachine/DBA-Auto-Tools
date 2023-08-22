@@ -82,7 +82,6 @@ class InstallationVariablesPage extends UI.InstallerPage
 class InstallationProgressPage extends UI.InstallerPage
 {
     paths := Map()
-    space := "  "
 
     build()
     {
@@ -120,7 +119,7 @@ class InstallationProgressPage extends UI.InstallerPage
     {
         output := ""
         loop level {
-            output .= this.space
+            output .= "  "
         }
         output .= text
         if (useLineBreak) {
