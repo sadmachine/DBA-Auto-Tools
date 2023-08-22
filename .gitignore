@@ -1,2 +1,3 @@
+*.beta.exe
 /dist/*.exe
 /dist/**/*.exe
