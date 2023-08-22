@@ -50,18 +50,19 @@ class ProgressPage extends UI.InstallerPage
 
     build()
     {
-        this.fields["prgComplete"] := this.Add("Progress", "Range0-8 h20 w" this.width, 0)
-        this.fields["edtActionLog"] := this.Add("Edit", "+ReadOnly h" (this.height - 30) " w" this.width)
+        this.controls["prgComplete"] := this.Add("Progress", "Range0-2 h20 w" this.width, 0)
+        this.SetFont("s8", "Lucida Sans Typewriter")
+        this.controls["edtActionLog"] := this.Add("Edit", "+ReadOnly h" (this.height - 30) " w" this.width)
         super.build()
     }
 
     performActions()
     {
         ; Disable parent buttons
-        this.parent.actions["btnPrev"].opt("+Disabled")
-        this.parent.actions["btnNext"].opt("+Disabled")
-        this.parent.actions["btnFinish"].opt("+Disabled")
-        this.parent.actions["btnCancel"].opt("+Disabled")
+        this.parent.disable("btnPrev")
+        this.parent.disable("btnNext")
+        this.parent.disable("btnFinish")
+        this.parent.disable("btnCancel")
 
         ; Run Actions
 
@@ -72,22 +73,40 @@ class ProgressPage extends UI.InstallerPage
         this.logAction("Complete!")
 
         ; Enable parent buttons
-        this.parent.actions["btnPrev"].opt("-Disabled")
-        this.parent.actions["btnNext"].opt("-Disabled")
-        this.parent.actions["btnFinish"].opt("+Disabled")
-        this.parent.actions["btnCancel"].opt("-Disabled")
+        this.parent.enable("btnNext")
+        this.parent.enable("btnFinish")
+        this.parent.enable("btnCancel")
     }
 
-    logAction(text := "", useLineBreak := true)
+    logAction(text := "", level := 0, useLineBreak := true)
     {
-        lineBreak := (useLineBreak ? "`n" : "")
-        this.fields["edtActionLog"].Value .= text lineBreak
-        ControlSend("^{End}", this.fields["edtActionLog"], this.guiObj)
+        output := ""
+        loop level {
+            output .= "  "
+        }
+        output .= text
+        if (useLineBreak) {
+            output .= "`n"
+        }
+        this.controls["edtActionLog"].Value .= output 
+        ControlSend("^{End}", this.controls["edtActionLog"], this.guiObj)
+    }
+
+    logDone(text, level := 1, useLineBreak?)
+    {
+        text := Format("{:- 7s}{: 5s}{:s}", "DONE", " ... ", text)
+        this.logAction(text, level?, useLineBreak?)
+    }
+
+    logSkipped(text, level := 1, useLineBreak?)
+    {
+        text := Format("{:- 7s}{: 5s}{:s}", "SKIPPED", " ... ", text)
+        this.logAction(text, level?, useLineBreak?)
     }
 
     updateProgress(amount)
     {
-        this.fields["prgComplete"].Value += amount
+        this.controls["prgComplete"].Value += amount
     }
 
     incrementProgress()
@@ -95,58 +114,28 @@ class ProgressPage extends UI.InstallerPage
         this.updateProgress(1)
     }
 
-    createDirectories()
+    createShortcuts()
     {
-        this.logAction("Creating Directories:")
+        this.logAction("Creating Shortcuts:")
 
-        this.paths["installation"] := Path.concat(this.parent.data["installationPath"], "DBA AutoTools")
-        this.paths["app"] := Path.concat(this.paths["installation"], "app")
-        this.paths["client"] := Path.concat(this.paths["installation"], "client")
-        this.paths["modules"] := Path.concat(this.paths["app"], "modules")
+        rootPath := Path.makeAbsolute(Path.concat(A_ScriptDir, "../"))
+        MsgBox(rootPath)
+        uncRootPath := Path.convertToUnc(rootPath)
+        MsgBox(uncRootPath)
+        targetPath := Path.concat(uncRootPath, "DBA AutoTools.exe")
+        desktopLinkPath := Path.concat(A_DesktopCommon, "DBA AutoTools.lnk")
+        startupLinkPath := path.concat(A_StartupCommon, "DBA AutoTools.lnk")
 
-        DirCreate(this.paths["installation"])
-        this.logAction("`t" this.paths["installation"])
+        FileCreateShortcut(targetPath, desktopLinkPath, uncRootPath)
+        this.logDone(desktopLinkPath)
         this.incrementProgress()
-        DirCreate(this.paths["app"])
-        this.logAction("`t" this.paths["app"])
-        this.incrementProgress()
-        DirCreate(this.paths["client"])
-        this.logAction("`t" this.paths["client"])
-        this.incrementProgress()
-        DirCreate(this.paths["modules"])
-        this.logAction("`t" this.paths["modules"])
+        FileCreateShortcut(targetPath, startupLinkPath, uncRootPath)
+        this.logDone(startupLinkPath)
         this.incrementProgress()
 
         this.logAction()
     }
 
-    copyFiles()
-    {
-        this.logAction("Copying Files:")
-
-        dbaAutoToolsExe := Path.concat(this.paths["installation"], "DBA AutoTools.exe")
-        jobReceiptsExe := Path.concat(this.paths["modules"], "Job Receipts.exe")
-        dashboardJson := Path.concat(this.paths["app"], "dashboard.json")
-        settingsIni := Path.concat(this.paths["app"], "settings.ini")
-        clientInstallExe := Path.concat(this.paths["client"], "ClientInstall.exe")
-
-        FileInstall("../dist/DBA AutoTools.exe", dbaAutoToolsExe, 1)
-        this.logAction("`t" dbaAutoToolsExe)
-        this.incrementProgress()
-        FileInstall("../dist/app/modules/Job Receipts.exe", jobReceiptsExe, 1)
-        this.logAction("`t" jobReceiptsExe)
-        this.incrementProgress()
-        FileInstall("../dist/app/dashboard.json", dashboardJson, 1)
-        this.logAction("`t" dashboardJson)
-        this.incrementProgress()
-        FileInstall("../dist/app/settings.ini", settingsIni, 1)
-        this.logAction("`t" settingsIni)
-        this.incrementProgress()
-        FileInstall("../dist/client/ClientInstall.exe", clientInstallExe, 1)
-        this.logAction("`t" clientInstallExe)
-        this.incrementProgress()
-        this.logAction()
-    }
 }
 
 class CompletePage extends UI.InstallerPage
@@ -154,7 +143,7 @@ class CompletePage extends UI.InstallerPage
 
     build()
     {
-        this.guiObj.Add("Text", "ym+20 w" this.width, "Server Installation is complete! You can click 'Finish' below to close this window.")
+        this.guiObj.Add("Text", "ym+20 w" this.width, "Client Installation is complete! You can click 'Finish' below to close this window.")
 
         super.build()
     }
