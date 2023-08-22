@@ -3,3 +3,4 @@
 *.beta.exe
 /installers/*
 !/installers/*.zip
+/installers/*.beta.zip
