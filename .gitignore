@@ -1,3 +1,4 @@
-*.beta.exe
 /dist/*.exe
 /dist/**/*.exe
+*.beta.exe
+/installers/*.beta/*
