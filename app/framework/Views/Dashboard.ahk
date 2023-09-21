@@ -59,9 +59,13 @@ class Dashboard
         this.display_y := 74
 
         ; Wait for the Main DBA window to be active
-        WinWait(DBA.Windows.WIN_MAIN)
-        WinActivate(DBA.Windows.WIN_MAIN)
-        WinWaitActive(DBA.Windows.WIN_MAIN)
+        try {
+            WinWait(DBA.Windows.WIN_MAIN)
+            WinActivate(DBA.Windows.WIN_MAIN)
+            WinWaitActive(DBA.Windows.WIN_MAIN)
+        } catch Any as e {
+            return
+        }
 
         ; Build the dashboard
         this.guiObj := Gui(, , Dashboard.Events(this.actions))

@@ -1,12 +1,14 @@
+; === TO-DOs ===================================================================
+; ==============================================================================
 ; === Script Information =======================================================
-; Name .........: Bootstrap (main)
-; Description ..: Bootstrap for main process
+; Name .........: Autoload
+; Description ..: File for autoloading necessary files across entrypoints
 ; AHK Version ..: 2.0.2 (Unicode 64-bit)
 ; Start Date ...: 08/05/2023
 ; OS Version ...: Windows 10
 ; Language .....: English - United States (en-US)
 ; Author .......: Austin Fishbaugh <austin.fishbaugh@gmail.com>
-; Filename .....: main.ahk
+; Filename .....: _autoload.ahk
 ; ==============================================================================
 
 ; === Revision History =========================================================
@@ -15,4 +17,12 @@
 ;
 ; === TO-DOs ===================================================================
 ; ==============================================================================
-#Include autoload.ahk
+
+; Start in the root directory
+#Include ../
+
+; --- Library includes ---------------------------------------------------------
+#Include <v2/DBA>
+#Include <v2/Vendor/Json>
+#Include <v2/Path>
+#Include <v2/UI>

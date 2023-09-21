@@ -15,7 +15,8 @@
 ;
 ; ==== TO-DOs ==================================================================
 ; ==============================================================================
-#Include bootstrap/main.ahk
+#Include bootstrap/autoload.ahk
+#Include Views/Dashboard.ahk
 
 
 Dashboard.initialize("app/dashboard.json")

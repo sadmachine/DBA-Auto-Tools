@@ -16,15 +16,18 @@
 ; ==== TO-DOs ==================================================================
 ; ==============================================================================
 
-#Include src/views/ServerInstaller.ahk
+#Include Views/ServerInstaller.ahk
+#Include <v2/Tmp>
 
 if (A_IsCompiled) {
     versionStr := SubStr(A_ScriptName, 29)
     versionStr := StrSplit(versionStr, ".exe")[1]
-    assetStr := "assets/Prag Logo.ico"
+    tmpPath := Tmp.path("DBA AutoTools", "Prag Logo.ico")
+    FileInstall("assets/Prag Logo.ico", tmpPath, 1)
+    assetStr := tmpPath
 } else {
     versionStr := "x.x.x"
-    assetStr := "../assets/Prag Logo.ico"
+    assetStr := "assets/Prag Logo.ico"
 }
 
 install := ServerInstaller("DBA AutoTools", versionStr, assetStr)

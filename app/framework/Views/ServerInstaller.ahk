@@ -189,16 +189,16 @@ class InstallationProgressPage extends UI.InstallerPage
         clientInstallExe := Path.concat(this.paths["client"], "ClientInstall.exe")
         pragLogoIco := Path.concat(this.paths["app"], "Prag Logo.ico")
 
-        FileInstall("../dist/DBA AutoTools.exe", dbaAutoToolsExe, 1)
+        FileInstall("../../dist/DBA AutoTools.exe", dbaAutoToolsExe, 1)
         this.logDone(dbaAutoToolsExe)
         this.incrementProgress()
 
-        FileInstall("../dist/app/modules/Job Receipts.exe", jobReceiptsExe, 1)
+        FileInstall("../../dist/app/modules/Job Receipts.exe", jobReceiptsExe, 1)
         this.logDone(jobReceiptsExe)
         this.incrementProgress()
 
         if (!FileExist(dashboardJson) || overwrite) {
-            FileInstall("../dist/app/dashboard.json", dashboardJson, 1)
+            FileInstall("../../dist/app/dashboard.json", dashboardJson, 1)
             this.logDone(dashboardJson)
             this.incrementProgress()
         } else {
@@ -206,8 +206,8 @@ class InstallationProgressPage extends UI.InstallerPage
             this.incrementProgress()
         }
 
-        if (!FileExist(dashboardJson) || overwrite) {
-            FileInstall("../dist/app/settings.ini", settingsIni, overwrite)
+        if (FileExist(settingsIni) && !overwrite) {
+            FileInstall("../../dist/app/settings.ini", settingsIni, overwrite)
             IniWrite(this.parent.data["databasePath"], settingsIni, "firebird", "Database")
             this.logDone(settingsIni)
             this.incrementProgress()
@@ -216,11 +216,11 @@ class InstallationProgressPage extends UI.InstallerPage
             this.incrementProgress()
         }
 
-        FileInstall("../assets/Prag Logo.ico", pragLogoIco, 1)
+        FileInstall("assets/Prag Logo.ico", pragLogoIco, 1)
         this.logDone(pragLogoIco)
         this.incrementProgress()
 
-        FileInstall("../dist/client/ClientInstall.exe", clientInstallExe, 1)
+        FileInstall("../../dist/client/ClientInstall.exe", clientInstallExe, 1)
         this.logDone(clientInstallExe)
         this.incrementProgress()
 

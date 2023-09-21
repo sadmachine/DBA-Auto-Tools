@@ -15,9 +15,9 @@
 ;
 ; ==== TO-DOs ==================================================================
 ; ==============================================================================
-#Include bootstrap/autoload.ahk
-#Include src/Views/NoInput.ahk
-#Include src/Views/ReceiptQuantityDialog.ahk
+#Include framework/bootstrap/autoload.ahk
+#Include framework/Views/NoInput.ahk
+#Include framework/Views/ReceiptQuantityDialog.ahk
 #Include <v2/DBA>
 
 UI.Base.defaultFont := Map("options", "S12", "fontName", "Segoe UI")
@@ -114,7 +114,7 @@ GetQuantities()
 AssertDbaExists()
 {
     if (!WinExist(DBA.Windows.WIN_MAIN)) {
-        throw Error("WindowException", A_ThisFunc, "The main DBA Manufacturing window does not exist.", A_LineFile, A_LineNumber)
+        throw Error("WindowException", A_ThisFunc, "The main DBA Manufacturing window does not exist.")
     }
 }
 
@@ -133,7 +133,7 @@ OpenJobReceiptsWindow()
 {
     DBA.Windows.MenuOpen("Jobs.Job Receipts")
     if (!WinWaitActive(DBA.Windows.WIN_JOB_RECEIPTS, , 5)) {
-        throw Error("WindowException", A_ThisFunc, "The 'Job Receipts' window never became active.", A_LineFile, A_LineNumber)
+        throw Error("WindowException", A_ThisFunc, "The 'Job Receipts' window never became active.")
     }
 }
 
