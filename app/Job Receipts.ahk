@@ -64,7 +64,6 @@ GetJobNumber()
 {
     database := IniRead("../settings.ini", "firebird", "Database")
 
-    connectionStr := "Driver=Firebird/InterBase(r) driver;Database=" database ";User=SYSDBA;Password=masterkey;"
 
     valid := false
     while (!valid) {
@@ -79,14 +78,15 @@ GetJobNumber()
 
         jobNumber := result.value
 
-        DB := DBA.DbConnection(connectionStr)
+        DB := DBA.DbConnection(Map("database", database))
         results := DB.query("SELECT jobno, jobstats FROM jobs WHERE jobno='" jobNumber "'")
         if (results.count() != 1) {
             MsgBox("The Job # you entered (" jobNumber ") is not valid, please enter another.", "Job # Error", "Icon!")
             continue
         }
 
-        if (results.row(1)["JOBSTATS"] != 'RELEASED') {
+        result := results.row(1)
+        if (result["JOBSTATS"] != 'RELEASED') {
             MsgBox("The Job # you entered (" jobNumber ") has status " results[1]["jobstats"] ", but status must be RELEASED.`nPlease release the job or try another Job #.", "Job # Error", "Icon!")
             continue
         }
