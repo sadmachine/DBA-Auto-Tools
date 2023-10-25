@@ -83,9 +83,10 @@ GetJobNumber()
 
         jobNumber := result.value
 
-        DB := DBA.DbConnection(Map("database", database))
+        DB := DBA.DbConnection(Map("dsn", "DBA"))
         results := DB.query("SELECT jobno, jobstats FROM jobs WHERE jobno='" jobNumber "'")
-        if (results.count() != 1) {
+        results.Display()
+        if (results.count() < 1) {
             MsgBox("The Job # you entered (" jobNumber ") is not valid, please enter another.", "Job # Error", "Icon!")
             continue
         }
