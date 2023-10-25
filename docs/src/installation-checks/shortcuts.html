@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Shortcuts</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+    <div class="main">
+        <h1>Shortcuts</h1>
+        <div class="section table-of-contents">
+            <h2>Contents</h2>
+            <ul>
+                <li>
+                    <a href="#summary">Summary</a>
+                </li>
+                <li>
+                    <a href="#introduction">Introduction</a>
+                </li>
+                <li>
+                    <a href="#startup-folder">Startup Folder</a>
+                </li>
+                <li>
+                    <a href="#public-desktop-folder">Public Desktop Folder</a>
+                </li>
+            </ul>
+        </div>
+        <div class="section summary">
+            <a id="summary"></a>
+            <h2>Summary</h2>
+            <div class="p-group">
+                <p>
+                    Verify that shortcuts to the main executable (<code>DBA AutoTools.exe</code>, found in the
+                    <a href="installation-checks/filesystem.html#installation-directory">installation directory</a>)
+                    exist in the following locations:
+                </p>
+                <ul>
+                    <li>
+                        <code>shell:common startup</code> 
+                        (usually translates to <code>C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup</code>)
+                    </li>
+                    <li>
+                        <code>shell:common desktop</code> 
+                        (usually translates to <code>C:\Users\Public\Desktop</code>)
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="section">
+            <a id="introduction"></a>
+            <h2>Introduction</h2>
+            <p>
+                There are several places that shorcuts to the main program can be placed for convenience. The most important
+                location is within the <em>Startup Folder</em> (alias <code>shell:common startup</code>) for the computer.
+                Placing the shortcut here ensures that anytime the computer starts up, the program will launch and run in
+                the background, waiting for DBA Manufacturing to be opened so it can be displayed.
+            </p>
+
+            <p>
+                Another common location to put the shortcut is within the <em>Public Desktop</em> (alias <code>shell:common
+                desktop</code>) so that is appears on the desktop of all users that sign onto the machine.
+            </p>
+        </div>
+        <div class="section">
+            <a id="startup-folder"></a>
+            <h2>Startup Folder</h2>
+            <div class="p-group">
+                <p>
+                    You can access this directory by opening up the <strong>File Explorer</strong> and typing
+                    <code>shell:common startup</code> into the navigation field, like below:
+                </p>
+                <div class="figure">
+                    <img src="img/shell-common-startup.png">
+                </div>
+            </div>
+            <p>
+                You should see a shortcut here for <strong>DBA AutoTools</strong>. If you do not see a shortcut here,
+                its recommended that you navigate to the 
+                <a href="installation-checks/filesystem.html#installation-directory">installation directory</a>, create a
+                shortcut of <strong>DBA AutoTools.exe</strong>, and place it in the <code>shell:common startup</code>
+                folder.
+            </p>
+        </div>
+
+        <div class="section">
+            <a id="public-desktop-folder"></a>
+            <h2>Public Desktop Folder</h2>
+            <div class="p-group">
+                <p>
+                    You can access this directory by opening up the <strong>File Explorer</strong> and typing
+                    <code>shell:common desktop</code> into the navigation field, like below:
+                </p>
+                <div class="figure">
+                    <img src="img/shell-common-desktop.png">
+                </div>
+            </div>
+            <p>
+                You should see a shortcut here for <strong>DBA AutoTools</strong>. If you do not see a shortcut here,
+                its recommended that you navigate to the 
+                <a href="installation-checks/filesystem.html#installation-directory">installation directory</a>, create a
+                shortcut of <strong>DBA AutoTools.exe</strong>, and place it in the <code>shell:common desktop</code>
+                folder.
+            </p>
+        </div>
+    </div>
+</body>
+
+</html>

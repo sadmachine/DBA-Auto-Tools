@@ -1,0 +1,165 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Dashboard doesn't show up in DBA</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+    <div class="main">
+        <h1>Dashboard Doesn't Show Up in DBA</h1>
+
+        <div class="section table-of-contents">
+            <h2>Contents</h2>
+            <ul>
+                <li>
+                    <a href="#summary">
+                        Summary
+                    </a>
+                </li>
+                <li>
+                    <a href="#problem-description">
+                        Problem Description
+                    </a>
+                </li>
+                <li>
+                    <a href="#potential-causes-solutions">
+                        Potential Causes/Solutions
+                    </a>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="section summary">
+            <a id="summary"></a>
+            <h2>Summary</h2>
+            <ol>
+                <li>
+                    Verify that the required 
+                    <a href="installation-checks/filesystem.html#executables">executables</a> and 
+                    <a href="installation-checks/shortcuts.html">shortcuts</a> exist.
+                    <ul>
+                        <li>
+                            If either is missing, a reinstallation of the latest version is required. 
+                            <ul>
+                                <li>
+                                    If you know where to find the installer, you can run it yourself on the affected
+                                    machine. The installer is usually located over the network, wherever the DBA
+                                    Manufacturing installation is, within the <code>Add-Ons\DBA
+                                    AutoTools\Installers</code> folder.
+                                </li>
+                                <li>
+                                    If you or the system administrator is unaware of where to find the installer for
+                                    the latest version, please contact the original person responsible for
+                                    installation, and let them know that a reinstallation is necessary.
+                                </li>
+                            </ul> 
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    Verify that the program is running by checking for the 
+                    <a href="installation-checks/tray-icon-menu.html">Tray Icon</a> and
+                    <a href="installation-checks/processes.html">Processes</a> that should exist.
+                    <ul>
+                        <li>
+                            If the <strong>Tray Icon</strong> is missing but the <strong>Processes</strong> are
+                            running, try ending the process and restarting the program from the Desktop Icon. Then,
+                            verify again that the program is running by checking for the Tray Icon and the running
+                            Processes.
+                        </li>
+                        <li>
+                            If the <strong>Tray Icon</strong> is missing and the <strong>Processes</strong> do not
+                            exist, that means the program is not running and you must start the program from the
+                            Desktop Icon. Then, verify that the program is running by checking for the Tray Icon and
+                            the running Processes.
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    If you have performed all of the steps above and the DBA AutoTools dashboard still is not
+                    showing, please contact the person responsible for installating the program for further
+                    troubleshooting.
+                </li>
+            </ol>
+        </div>
+
+        <div class="section">
+            <a id="problem-description"></a>
+            <h2>Problem Description</h2>
+            <div class="p-group">
+                <p>
+                    As long as DBA AutoTools is running in the background, the expected behavior is that the DBA AutoTools
+                    dashboard will appear in the main DBA Manufacturing screen, like below:
+                </p>
+                <div class="figure">
+                    <img src="img/dba-autotools-dashboard.png">
+                </div>
+            </div>
+            <p>
+                If the DBA AutoTools dashboard does not appear as it does in the above image, that means something is not functioning
+                as expected.
+            </p>
+        </div>
+
+        <div class="section">
+            <a id="potential-causes-solutions"></a>
+            <h2>Potential Causes/Solutions</h2>
+
+            <div class="section">
+                <h3>Cause: DBA AutoTools is not running</h3>
+                <p>
+                    In order for the DBA AutoTools dashboard to show up, the program must be running in the background.
+                    You can verify whether or DBA AutoTools is running by checking for the 
+                    <a href="installation-checks/tray-icon-menu.html">Tray Icon</a> as well as the 
+                    <a href="installation-checks/processes.html">Processes</a> which indicate the programming is
+                    running properly.
+                </p>
+
+                <p>
+                    If the <strong>Tray Icon</strong> is missing but the <strong>Processes</strong> are running, try
+                    closing the <a href="installation-checks/processes.html">Processes</a> from the <em>Task
+                    Manager</em>, and restarting the program from the 
+                    <a href="installation-checks/shortcuts.html#public-desktop-folder">shortcut</a> that should exist 
+                    on the desktop. Then verify that the <strong>Tray Icon</strong> exists, and that the DBA AutoTools
+                    dashboard is appearing properly within the DBA Manufacturing program.
+                </p>
+
+                <p>
+                    If neither the <strong>Tray Icon</strong> nor the <strong>Processes</strong> exist, try launching
+                    the program from the icon on the desktop. Then, verify that the <strong>Tray Icon</strong> and
+                    <strong>Processes</strong> exists, and that the DBA AutoTools dashboard is appearing properly within
+                    the DBA Manufacturing program.
+                </p>
+
+                <p>
+                    If neither of the above steps solves the problem, continue to the next section.
+                </p>
+            </div>
+
+            <div class="section">
+                <h3>Cause: DBA AutoTools is not properly installed</h3>
+                <p>
+                    In order for the DBA AutoTools dashboard to appear, the program has to be properly installed. If you
+                    tried the steps above, and the program would not start properly, this most likely means that there
+                    is a problem with the installation.  Please review and follow any troubleshooting steps found in the
+                    <a href="installation-checks.html">Installation Checks</a>, in particular the section on 
+                    <a href="installation-checks/filesystem.html#executables">Executables</a>. 
+                </p>
+                <p>
+                    Once you've reviewed the installation checks, attempt to open the DBA AutoTools program again from
+                    the desktop shortcut and verify that the <strong>Tray Icon</strong> and <strong>Processes</strong>
+                    exist. Then, verify that the DBA AutoTools dashboard shows up in the DBA Manufacturing screen. 
+                </p>
+            </div>
+            <p>
+                If you've reached this point and the DBA AutoTools dashboard still isn't appearing properly, please
+                contact the person responsible for installing the program originally to troubleshoot further.
+            </p>
+        </div>
+    </div>
+</body>
+
+</html>

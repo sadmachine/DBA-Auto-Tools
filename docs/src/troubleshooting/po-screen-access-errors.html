@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>PO screen access errors</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+    <div class="main">
+        <h1>PO Screen Access Errors</h1>
+        
+        <div class="section table-of-contents">
+            <ul>
+                <li>
+                    <a href="#overview">Overview</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Overview</h2>
+
+            <p>
+                If you receive a message from DBA when you attempt to open the PO Screen that says something along the
+                lines of <em>"A component named frmPurchase already exists"</em> OR <em>"Access Violation error in EJSME.EXE"</em>, 
+                this is actually a known issue with DBA Manufacturing, and doesn't have anything to do with the DBA AutoTools
+                program.
+            </p>
+
+            <p>
+                DBA Manufacturing has a support article related to this issue, which can be found 
+                <a href="https://support.dbamanufacturing.com/support/solutions/articles/35000005586-receiving-an-error-when-launching-the-po-screen">here</a>.
+            </p>
+
+            <p>
+                The fix for this issue is essentially to make sure that the computer has a default printer assigned. If there is already a default printer assigned, try assigning a different printer as the default, then reassigning the original printer as the default again.
+                You can find an article on how to assign default printers in Windows <a href="https://support.microsoft.com/en-us/windows/set-a-default-printer-in-windows-e10cf8b8-e596-b102-bf84-c41022b5036f#:~:text=a%20default%20printer%3A-,Select%20Start%20%3E%20Settings%20.,printer%20option%20may%20be%20selected.">here</a>.
+            </p>
+        </div>
+    </div>
+</body>
+
+</html>

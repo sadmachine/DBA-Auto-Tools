@@ -1,0 +1,211 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Filesystem</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+    <div class="main">
+        <h1>Filesystem</h1>
+
+        <div class="section table-of-contents">
+            <h2>Contents</h2>
+            <ul>
+                <li>
+                    <a href="#summary">Summary</a>
+                </li>
+                <li>
+                    <a href="#installation-directory">Installation Directory</a>
+                </li>
+                <li>
+                    <a href="#directories">Directories</a>
+                </li>
+                <li>
+                    <a href="#executables">Executables</a>
+                    <ul>
+                        <li>
+                            <a href="#main-executables">Main Executables</a>
+                        </li>
+                        <li>
+                            <a href="#module-executables">Module Executables</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#initialization-files">Initialization Files</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="section summary">
+            <a id="summary"></a>
+            <h2>Summary</h2>
+            <p>
+                A complete required file structure is below. Continue reading for an explanation of required files.
+            </p>
+
+            <pre><code>
+DBA AutoTools/
+├── app/
+│   ├── config/
+│   ├── modules/
+│   ├── queue/
+│   ├── storage/
+│   │   └── logs/
+│   ├── templates/
+│   ├── mods.ini
+│   ├── settings.ini
+│   ├── settings.example.ini
+│   └── version.ini
+├── .env
+├── DBA AutoTools.exe
+├── QueueManager.exe
+└── Settings.exe
+            </code></pre>
+        </div>
+
+        <div class="section">
+            <a id="installation-directory"></a>
+            <h2>1) Installation Directory</h2>
+
+            <p>
+                The default installation directory for <strong>DBA AutoTools</strong> is <code>C:\DBA Help\DBA AutoTools</code>,
+                if you do not find the installation at this location please consult with the person who installed the program to
+                find out where it was installed.
+            </p>
+        </div>
+
+        <div class="section">
+            <a id="directories"></a>
+
+            <h2>2) Directories</h2>
+            <p>
+                Upon installation, <strong>DBA AutoTools</strong> creates a directory structure which is required for the
+                program to function properly. Its important that the directory structure remains intact, and nothing gets
+                deleted/rearranged.
+            </p>
+
+            <p>
+                The complete directory structure is found below. If any of the directories are missing, something is wrong and
+                the program should either be reinstalled, or the missing directories need to be recreated:
+            </p>
+
+            <pre><code>
+DBA AutoTools/
+└── app/
+    ├── config/
+    ├── modules/
+    ├── queue/
+    ├── storage/
+    │   └── logs/
+    └── templates/
+            </code></pre>
+        </div>
+
+        <div class="section">
+            <a id="executables"></a>
+            <h2>3) Executables</h2>
+
+            <p>
+                There are certain executable (.exe) files that must exist in the installation directory in order for the
+                program to function properly. There are two executables that always must exist and allow the main
+                dashboard to function (<a href="#main-executables">Main Executables</a>), and then for each module there is 
+                an additional executable file that must be present (<a href="#module-executables">Module Executables</a>).
+            </p>
+
+            <div class="section">
+                <a id="main-executables"></a>
+                <h3>3.1) Main Executables</h3>
+
+                <p>
+                    The two main executables that must exist are <code>DBA AutoTools.exe</code> and <code>QueueManager.exe</code>.
+                    If either of these programs are missing, the main dashboard will not appear, and any document generation or
+                    printing operations that happen in the background will remain stuck in the queue. These executables must be
+                    found in the root of the installation directory, like below:
+                </p>
+
+                <pre><code>
+DBA AutoTools/
+├── ...
+├── DBA AutoTools.exe
+├── QueueManager.exe
+└── ...
+                </code></pre>
+
+            </div>
+
+            <div class="section">
+                <a id="module-executables"></a>
+                <h3>3.2) Module Executables</h3>
+                <p>
+                    For each installed module, there is a corresponding executable file, found within the <code>app/modules</code>
+                    folder. So, if there are any buttons on the dashboard that appear not to be working, it might be because its
+                    executable is missing or was deleted.
+                </p>
+
+                <div class="p-group">
+                    <p>
+                        <strong>An example</strong>
+                        <br>
+                        The dashboard contains three modules (buttons)
+                    </p>
+                    <ul>
+                        <li>Job Receipts</li>
+                        <li>PO Receipts</li>
+                        <li>Stock Transfer</li>
+                    </ul>
+                </div>
+
+                <p>
+                    We would expect to see a file structure like the below:
+                </p>
+
+                <pre><code>
+DBA AutoTools/
+├── ...
+├── app/
+│   ├── ...
+│   ├── modules/
+│   │   ├── Job_Receipts.exe
+│   │   ├── PO_Receipts.exe
+│   │   └── Stock_Transfer.exe
+│   └── ...
+└── ...
+                </code></pre>
+            </div> 
+        </div>
+        <div class="section">
+            <a id="initialization-files"></a>
+            <h2>4) Initialization Files</h2>
+
+            <p>
+                There are a set of files that are read at program startup and provide settings/context for how the
+                program should operate within a given environment. These files are often called <em>Initialization Files</em>
+                and have the extension <code>.ini</code>, although we will see that's not always the case. Without these
+                files, the program will not function properly.
+            </p>
+
+            <p>
+                There are 3 required <code>.ini</code> files within the <code>app</code> directory, and one
+                <code>.env</code> file within the root installation directory. The complete list of files is below.
+            </p>
+
+            <pre><code>
+DBA AutoTools/
+├── app/
+│   ├── ...
+│   ├── mods.ini
+│   ├── settings.ini
+│   └── version.ini
+├── ...
+├── .env
+└── ...
+            </code></pre>
+        </div>
+    <div>
+</body>
+
+</html>

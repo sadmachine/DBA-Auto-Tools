@@ -16,7 +16,7 @@
 ; ==== TO-DOs ==================================================================
 ; ==============================================================================
 
-#Include Views/ServerInstaller.ahk
+#Include ui/ServerInstaller.ahk
 #Include <v2/Tmp>
 
 if (A_IsCompiled) {

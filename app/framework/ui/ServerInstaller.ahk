@@ -206,7 +206,7 @@ class InstallationProgressPage extends UI.InstallerPage
             this.incrementProgress()
         }
 
-        if (FileExist(settingsIni) && !overwrite) {
+        if (!FileExist(settingsIni) || overwrite) {
             FileInstall("../../dist/app/settings.ini", settingsIni, overwrite)
             IniWrite(this.parent.data["databasePath"], settingsIni, "firebird", "Database")
             this.logDone(settingsIni)

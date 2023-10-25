@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Config Files</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+    <div class="main">
+        <h1>Config Files</h1>
+        <div class="section table-of-contents">
+            <h2>Contents</h2>
+            <ul>
+                <li>
+                    <a href="#summary">Summary</a>
+                </li>
+                <li>
+                    <a href="#introduction">Introduction</a>
+                </li>
+                <li>
+                    <a href="#types-locations">Types/Locations</a>
+                </li>
+            </ul>
+        </div>
+        <div class="section summary">
+            <a id="summary"></a>
+            <h2>Summary</h2>
+            <div class="p-group">
+                <p>
+                    Verify that <code>app/settings.ini</code> (found within the
+                    <a href="installation-checks/filesystem.html#installation-directory">installation directory</a>)
+                    contains paths to valid directories for both <code>local</code> and <code>global</code>.
+                </p>
+                <ul>
+                    <li>
+                        <code>local</code> should be a path on the local machine, most likely in the installation directory.<br>
+                        (something like <code>C:\DBA Help\DBA AutoTools\app\config</code>)
+                    </li>
+                    <li>
+                        <code>global</code> should be a path on the network.<br>
+                        (something like <code>\\server-name\DBA Manufacturing\Add-Ons\DBA AutoTools\config</code>)
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="section">
+            <a id="introduction"></a>
+            <h2>Introduction</h2>
+            <p>
+                Config files are used to store user editable settings that affect how the program operates at runtime. For
+                instance, there is a config file which contains information about what the next inspection number should be
+                when generating inspection documents. What config files/values exist depends on the modules used and the
+                specific implementation of the program.
+            </p>
+
+            <div class="p-group">
+                <p>
+                    These files/values can be edited by using the supplied <code>Settings.exe</code> program, found within the
+                    main installation directory.
+                </p>
+                <div class="figure">
+                    <img src="img/settings-gui.png">
+                </div>
+            </div>
+
+            <p>
+                Often times, if a config file is missing, the program will notify you of that error and explain what needs
+                to be done to fix the situation. Sometimes, the program will even force you to specify a value before you
+                are able to continue using the program.
+            </p>
+        </div>
+        <div class="section">
+            <a id="types-locations"></a>
+            <h2>Types/Locations</h2>
+            <div class="p-group">
+                <p>
+                    There are two types of config files:
+                </p>
+                <dl>
+                    <dt>Local</dt>
+                    <dd>
+                        Determines settings which will affect the current machine/installation only
+                        <br>
+                        These files are stored on the current machine
+                    </dd>
+
+                    <dt>Global</dt>
+                    <dd>
+                        Determines settings which will affect all machines/installations that are running DBA AutoTools
+                        <br>
+                        These files are stored on the network
+                    </dd>
+                </dl>
+            </div>
+
+            <p>
+                The program determines where to find both local and global configuration files by reading information from
+                the <a href="installation-checks/filesystem.html#initialization-files">initialization file</a>,
+                <code>app/settings.ini</code>. If the <code>settings.ini</code> file specifies incorrect locations or files
+                that do not exist, there may be some undefined behavior. Please verify that these locations seem correct.
+            </p>
+
+            <p>An example of a valid <code>app/settings.ini</code> is below:</p>
+
+            <pre><code>
+[location]
+local=C:\DBA Help\DBA AutoTools\app\config\
+global=\\stelray-erp\DBA Manufacturing\Add-Ons\DBA AutoTools\config
+            </code></pre>
+        </div>
+    </div>
+
+</body>
+
+</html>

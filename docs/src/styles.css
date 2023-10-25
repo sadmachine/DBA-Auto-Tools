@@ -1,0 +1,149 @@
+/*----------------------------------------------------------------------------*\
+  General Global/Reset Styles
+\*----------------------------------------------------------------------------*/
+* {
+  font-family: Arial, sans-serif;
+}
+
+html, body {
+  font-size: 10pt;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  margin-top: 10px;
+  margin-bottom: 0;
+  padding: 20px;
+  vertical-align: center;
+  height: 22px;
+  font-size: 18pt;
+  background: url("img/prag-logo-32x32.ico") no-repeat 10px right;
+  border-bottom: 2px solid #dc313a;
+}
+
+h2 {
+  font-size: 14pt;
+}
+
+h3 {
+  font-size: 12pt;
+}
+
+/* For all <code> */
+code {
+  font-family: monospace;
+  font-size: inherit;
+}
+
+/* Code in text */
+p > code,
+li > code,
+dd > code,
+td > code {
+  background: #f0f0f0;
+  color: #dc313a;
+  word-wrap: break-word;
+  box-decoration-break: clone;
+  padding: 2px 4px 2px;
+  border-radius: 100px;
+}
+
+p, div {
+  line-height: 150%;
+}
+
+/* Code blocks */
+pre {
+  margin: 0;
+  padding: 0px 10px;
+  background: #f0f0f0;
+  color: red;
+}
+
+dt {
+  padding-top: 10px;
+  font-weight: bold;
+  line-height: 150%;
+}
+
+dd {
+  padding-bottom: 10px;
+}
+
+h2 {
+  margin: 5px 0;
+  padding: 0;
+}
+
+ul, ol, dl {
+  margin: 0px 25px;
+  padding: 0;
+  line-height: 1.75;
+}
+
+/*----------------------------------------------------------------------------*\
+  Layout Styles
+\*----------------------------------------------------------------------------*/
+
+div.section {
+  padding: 10px 10px;
+}
+
+div.main > div.section {
+  padding-left: 10px;
+  border-top: 1px dotted #000;
+}
+
+div.main > div.section.-headroom {
+  margin-top: 20px;
+}
+
+div.main > div.section {
+  padding-left: 10px;
+  border-top: 1px dotted #000;
+}
+
+div.main > div.section > div.section {
+  padding-left: 20px;
+  border-top: none;
+  border-left: 5px solid #e0e0e0;
+}
+
+div.main > div.section.table-of-contents {
+  margin: 10px 0;
+  background-color: #f6f6f6;
+  padding: 10px 20px;
+  border-top: none;
+  border-left: 10px solid #e0e0e0;
+}
+
+div.main > div.section.summary {
+  margin: 10px 0;
+  background: #fffede;
+  padding: 10px 20px;
+  border-top: none;
+  border-left: 10px solid #fffcb1;
+}
+
+/*----------------------------------------------------------------------------*\
+  Component Styles
+\*----------------------------------------------------------------------------*/
+
+.figure {
+  display: block;
+  padding: 10px;
+}
+
+.icon {
+  display: inline;
+  width: 16px;
+  height: 16px;
+  margin: 0 0.125em;
+  padding: 0;
+  vertical-align: baseline;
+}
+
+.p-group > p {
+  margin-bottom: 5px;
+}

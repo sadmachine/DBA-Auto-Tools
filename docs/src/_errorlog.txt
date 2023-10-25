@@ -1,0 +1,37 @@
+Microsoft HTML Help Compiler 4.74.8702
+
+Compiling d:\Pragmatic\Projects\DBA-Auto-Tools\docs\src\DBA AutoTools Help.chm
+
+installation-checks.config-files.html
+installation-checks.filesystem.html
+installation-checks.html
+installation-checks.processes.html
+installation-checks.shortcuts.html
+installation-checks.tray-icon-menu.html
+styles.css
+troubleshooting.dashboard-doesnt-show-up-in-dba.html
+troubleshooting.html
+troubleshooting.log-files-arent-generating-updating.html
+troubleshooting.po-screen-access-errors.html
+img\dba-autotools-dashboard.png
+img\processes.png
+img\settings-gui.png
+img\shell-common-desktop.png
+img\shell-common-startup.png
+img\tray-icon-hidden.png
+img\tray-icon-normal.png
+img\tray-menu.png
+DBA AutoTools Help.hhc
+DBA AutoTools Help.hhk
+img\hidden-files-example.png
+img\Prag Logo.ico
+
+Compile time: 0 minutes, 0 seconds
+12	Topics
+67	Local links
+0	Internet links
+1	Graphic
+
+
+Created d:\Pragmatic\Projects\DBA-Auto-Tools\docs\src\DBA AutoTools Help.chm, 601,060 bytes
+Compression decreased file by 208,333 bytes.

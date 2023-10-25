@@ -1,18 +1,15 @@
-# Set our parameters
 Param(
     [string]$BuildConfigPath = "$pwd\.build.ps1"
 )
-
-# Set some default environmen variables
-$compiler = $Env:AHK_COMPILER;
-$binFile = $Env:AHK2_COMPILER_BINFILE;
-
-# Do some config setup
 
 if (-not(Test-Path $buildConfigPath)) {
     Write-Output "Please supply a valid config path, found: `n`r`t$buildConfigPath"
     exit 1
 }
+
+# Setup some variables for use during build
+$compiler = $Env:AHK_COMPILER;
+$binFile = $Env:AHK2_COMPILER_BINFILE;
 
 if ($args[0]) {
     $currentVersion = $args[0];
@@ -22,26 +19,26 @@ else {
     $currentVersion = $currentVersion + ".beta"
 }
 
-$settingsPath = Join-Path -Path $pwd -ChildPath "dist\app\settings.ini"
-
-inifile $settingsPath [version] current=$currentVersion
-
 # Import out build config (once necessary variables are available)
 . $buildConfigPath
 
-# get Firefox process
+# Prior to building, make sure we've updated the stored version
+$settingsPath = Join-Path -Path $pwd -ChildPath "dist\app\settings.ini"
+inifile $settingsPath [version] current=$currentVersion
+
+# Build using the build rules in the build config
 $buildRules | ForEach-Object {
     $processFilename = $_['process']
     Write-Output ('#' * ($Host.UI.RawUI.WindowSize.Width - 10))
     Write-Output "Check if process exists: $processFilename"
     $process = Get-Process -ErrorAction SilentlyContinue | Where-Object { $_.Path -like "*$processFilename*" }
     if ($process) {
-        Write-Output "`t- Process exists, attempting to close gracefully"
+        Write-Output "  > Process exists, attempting to close gracefully"
         # try gracefully first
         $process.CloseMainWindow() | Out-Null
         # kill after five seconds
         Start-Sleep 1
-        Write-Output "`t- Could not close gracefully, forcing"
+        Write-Output "  > Could not close gracefully, forcing"
         if (!$process.HasExited) {
             $process | Stop-Process -Force
         }

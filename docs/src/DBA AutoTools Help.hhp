@@ -1,0 +1,23 @@
+[OPTIONS]
+Compatibility=1.1 or later
+Compiled file=DBA AutoTools Help.chm
+Contents file=DBA AutoTools Help.hhc
+Default font=Verdana,12,0
+Default topic=
+Full-text search=Yes
+Index file=DBA AutoTools Help.hhk
+Language=0x409 English (United States)
+Title=DBA AutoTools Help
+
+[FILES]
+installation-checks.html
+installation-checks\filesystem.html
+installation-checks\shortcuts.html
+installation-checks\config-files.html
+installation-checks\tray-icon-menu.html
+installation-checks\processes.html
+troubleshooting.html
+troubleshooting\log-files-arent-generating-updating.html
+troubleshooting\dashboard-doesnt-show-up-in-dba.html
+troubleshooting\po-screen-access-errors.html
+img\prag-logo-32x32.ico

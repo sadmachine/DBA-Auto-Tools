@@ -16,7 +16,7 @@
 ; ==== TO-DOs ==================================================================
 ; ==============================================================================
 
-#Include Views/ClientInstaller.ahk
+#Include ui/ClientInstaller.ahk
 
 full_command_line := DllCall("GetCommandLine", "str")
 

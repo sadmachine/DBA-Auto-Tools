@@ -16,11 +16,16 @@
 ; ==== TO-DOs ==================================================================
 ; ==============================================================================
 #Include framework/bootstrap/autoload.ahk
-#Include framework/Views/NoInput.ahk
-#Include framework/Views/ReceiptQuantityDialog.ahk
+#Include framework/ui/NoInput.ahk
+#Include framework/ui/WinWaitCloseMsgBox.ahk
+#Include local/ui/ReceiptQuantityDialog.ahk
 #Include <v2/DBA>
+#Include <v2/DotEnv>
+#Include <v2/Path>
 
 UI.Base.defaultFont := Map("options", "S12", "fontName", "Segoe UI")
+
+userValidatePost := true
 
 SetControlDelay(100)
 SetKeyDelay(50)
@@ -155,6 +160,7 @@ EnterJobNumber(jobNumber)
 
 EnterQuantitiesAndLocations(quantities)
 {
+    global noInputGui
     hwnd := WinExist(DBA.Windows.WIN_JOB_RECEIPTS)
     while (!ControlExist("TdxDBGrid1", hwnd)) {
     }
@@ -165,24 +171,36 @@ EnterQuantitiesAndLocations(quantities)
     ControlSend("{Tab}", "TdxDBGrid1")
     ControlSend("NCMR-", "TdxDBGrid1")
     ControlSend("{Enter}", "TdxDBGrid1")
-    ControlSend("{Alt Down}u{Alt Up}")
 
-    WinClose(DBA.Windows.WIN_JOB_RECEIPTS)
-    
-    count := 0
-    while (WinWait("Warning", unset, 1)) {
-        WinActivate()
-        Send("u")
-        WinExist(DBA.Windows.WIN_JOB_RECEIPTS)
+    if (userValidatePost == true) {
+        noInputGui.Destroy()
+        WinWaitCloseMsgBox(
+            'Please verify the entered information, then click the "Update" button and close the Job Receipts window.', 
+            DBA.Windows.WIN_JOB_RECEIPTS
+        )
+        WinWaitClose(DBA.Windows.WIN_JOB_RECEIPTS)
+    } else {
+        Sleep 500
         ControlSend("{Alt Down}u{Alt Up}")
-        count++
-        if (count >= 5) {
-            Break
-        }
-    }
+        Sleep 500
 
-    if (!WinWaitClose(DBA.Windows.WIN_JOB_RECEIPTS, unset, 5)) {
-        MsgBox("There was an issue closing the 'Job Receipts' window. Please check that the transaction was saved and close the window manually.", "Job Receipts", "Icon!")
+        WinClose(DBA.Windows.WIN_JOB_RECEIPTS)
+        
+        count := 0
+        while (WinWait("Warning", unset, 1)) {
+            WinActivate()
+            Send("u")
+            WinExist(DBA.Windows.WIN_JOB_RECEIPTS)
+            ControlSend("{Alt Down}u{Alt Up}")
+            count++
+            if (count >= 5) {
+                Break
+            }
+        }
+
+        if (!WinWaitClose(DBA.Windows.WIN_JOB_RECEIPTS, unset, 5)) {
+            MsgBox("There was an issue closing the 'Job Receipts' window. Please check that the transaction was saved and close the window manually.", "Job Receipts", "Icon!")
+        }
     }
 }
 

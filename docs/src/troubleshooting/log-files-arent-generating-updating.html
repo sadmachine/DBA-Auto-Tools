@@ -1,0 +1,194 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Log files aren't generating/updating</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+    <div class="main">
+        <h1>Log files aren't generating/updating</h1>
+        <div class="section table-of-contents">
+            <h2>Contents</h2>
+            <ul>
+                <li>
+                    <a href="#summary">Summary</a>
+                </li>
+                <li>
+                    <a href="#problem-description">Problem Description</a>
+                </li>
+                <li>
+                    <a href="#potential-causes-solutions">
+                        Potential Causes/Solutions
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="section summary">
+            <a id="summary"></a>
+            <h2>Summary</h2>
+            <div class="p-group">
+                <p>
+                    Try all steps below. If none of them fix the issue, contact the original installer of the program for
+                    further troubleshooting.
+                </p>
+                <ul>
+                    <li>
+                        Verify that the <code>QueueManager.exe</code> process is running on the machine (see
+                        <a href="installation-checks/processes.html#expected-processes">Processes</a>)
+                        <ul>
+                            <li>
+                                If it's not, close the existing <code>DBA AutoTools.exe</code> process (if it is running) and
+                                restart the DBA AutoTools application. The easiest way to restart the application is to
+                                double-click the shortcut that can be found on the desktop, which should be called "DBA
+                                AutoTools".
+                            </li>
+                            <li>
+                                Once the program is restarted, verify that the <code>QueueManager.exe</code> process exists,
+                                and that the log files are getting generated/updated again. If not, continue to the next step.
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        Verify that the log file is not already opened in excel by someone. The log file cannot be updated
+                        while it is already open.
+                        <ul>
+                            <li>
+                                If the excel file is open by someone, have them close the excel and free up the file to
+                                be updated.
+                            </li>
+                            <li>
+                                If no one has the file open and the log files still aren't generating/updating, continue
+                                to the next step.
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        Verify that there aren't any leftover hidden <em>lockfiles</em> (see
+                        <a href="#lock-files">here</a> for more info on how to verify this)
+                        <ul>
+                            <li>
+                                If there is a leftover <em>lockfile</em>, and you've already verified that nobody has the file open, attempt to delete the file.
+                            </li>
+                            <li>
+                                If you were able to delete the file without getting a permission issue, verify that the log files are properly updating/generating again.
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <a id="problem-description"></a>
+            <h2>Problem Description</h2>
+            <p>
+                During normal execution of the program, there are several document (log) operations that could occur. A
+                document could be updated, or a new document could be generated. Each of these operations is initiated 
+                by a <em>job</em> that is waiting in the <em>job queue</em>; this is done so that the jobs can be processed
+                in parallel to normal automation operations without the program having to wait for them to complete, and so 
+                that the <em>jobs</em> can be retried if they fail.
+            </p>
+            <p>
+                Sometimes certain circumstances can lead to the <em>job queue</em> becoming stuck or locked up, or the process
+                responsible for handling the jobs in the queue might not be running, which would prevent them from getting
+                processed.
+            </p>
+            <p>
+                Thankfully, because we create and store the information that needs to be processed in these <em>jobs</em>, 
+                when things get stuck none of the information gets lost, and once we get the queue "unstuck" the jobs will
+                get processed where they left off as if nothing happened.
+            </p>
+        </div>
+        
+        <div class="section">
+            <a id="potential-causes-solutions"></a>
+            <h2>Potential Causes/Solutions</h2>
+            <div class="section">
+                <h3>Cause: <code>QueueManager.exe</code> is not running</h3>
+                <p>
+                    As mentioned above, these document updating/generation tasks are handled as jobs in a queue. The process
+                    responsible for handling these jobs is called <code>QueueManager.exe</code>. When <code>DBA AutoTools.exe</code>
+                    is started, it should automatically start <code>QueueManager.exe</code>. Under certain rare circumstances though,
+                    the process may not get run or may have been stopped accidentally. 
+                </p>
+                <p>
+                    The best way to restart the process is by restarting DBA AutoTools itself. This is accomplished by closing
+                    any existing <code>DBA AutoTools.exe</code> process (see 
+                    <a href="installation-checks/processes.html#expected-processes">Expected Processes</a>), then
+                    restarting it by double-clicking the DBA AutoTools desktop icon. Once the program starts, it should
+                    run <code>QueueManager.exe</code>.
+                </p>
+                <p>
+                    Verify that <code>QueueManager.exe</code> is properly running after restarting <code>DBA
+                    AutoTools.exe</code>, and also verify that the documents are properly generating/updating.
+                    If they are not, continue on to the next step.
+                </p>
+            </div>  
+            <div class="section">
+                <h3>Cause: the file is currently open by another user</h3>
+
+                <p>
+                    If the relevant file that is supposed to be updated is already opened by another user, the program 
+                    will be unable to update the file until it is closed. The file is essentially in <em>Read-Only</em>
+                    mode until it is closed. 
+                </p>
+
+                <p>
+                    Ask around to anyone who would have the file open, and make sure they close out of it if it is open.
+                    Once the file is closed, wait for a short period of time, maybe 1 to 5 minutes, and then reopen the file
+                    to verify that is has been updated properly. If it has not, continue on to the next step.
+                </p>
+            </div>
+            <div class="section">
+                <a id="lock-files"></a>
+                <h3>Cause: there are leftover hidden <em>lockfiles</em></h3>
+
+                <p>
+                    When certain documents are open, they create what are called <em>lockfiles</em>. These files 
+                    exist to control access of a document, and tell the computer that the file is already open and
+                    "locked" so that two or more users don't edit the same file at the same time, which can potentially
+                    cause conflicts/issues.
+                </p>
+
+                <p>
+                    These <em>lockfiles</em> are meant to be deleted one a user closes the file, but under certain circumstances
+                    they can get left behind and falsely identify a file as open. When this happens, the file will perpetually
+                    remain in "Read-Only" mode until the hanging lockfile is deleted.
+                </p>
+
+                <p>
+                    Generally these lockfiles are hidden, so you have to set your computer to show hidden files in order to
+                    find and delete them. You can find an article <a href="https://support.microsoft.com/en-us/windows/view-hidden-files-and-folders-in-windows-97fbc472-c603-9d90-91d0-1166d1d9f4b5">here</a>
+                    on how to show hidden files. 
+                </p>
+
+                <div class="p-group">
+                    <p>
+                        Once you have set your computer to show hidden files, you need to navigate to the directory/folder where the
+                        document that is supposed to get updated is located. Once there, if you see a file that starts with <code>~$</code>,
+                        this is the file that needs to be deleted. For instance, if your file is name <code>Document.xlsx</code>, there
+                        will be a file called <code>~$cument.xlsx</code>, and it will be slightly greyed out (indicating its a hidden file).
+                    </p>
+                    <div class="figure">
+                        <img src="img/hidden-files-example.png">
+                    </div>
+                </div>
+
+                <p>
+                    Once you have verified that no one has the document open, attempt to delete the lockfile. If it deletes without giving any
+                    errors, wait a short period of time, 1 to 5 minutes, then reopen the document and see if the updates are there. If not,
+                    further troubleshooting is necessary.
+                </p>
+            </div>
+            <p>
+                If you've reached this point and the DBA AutoTools dashboard still isn't appearing properly, please
+                contact the person responsible for installing the program originally to troubleshoot further.
+            </p>
+        </div>
+    </div>
+</body>
+
+</html>

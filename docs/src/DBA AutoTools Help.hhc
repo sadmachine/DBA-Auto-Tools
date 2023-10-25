@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML>
+<HEAD>
+<meta name="GENERATOR" content="Microsoft&reg; HTML Help Workshop 4.1">
+<!-- Sitemap 1.0 -->
+</HEAD>
+<BODY>
+<OBJECT type="text/site properties">
+  <param name="FrameName" value="right">
+  <param name="Font" value=",8,0">
+  <param name="ImageType" value="Book">
+  <param name="Window Styles" value="0x27">
+  <param name="ExWindow Styles" value="0x0">
+</OBJECT>
+<UL>
+<LI><OBJECT type="text/sitemap">
+  <param name="Name" value="Installation Checks">
+  <param name="Local" value="installation-checks.html">
+  <param name="ImageNumber" value="1">
+</OBJECT>
+<UL>
+<LI><OBJECT type="text/sitemap">
+  <param name="Name" value="Filesystem">
+  <param name="Local" value="installation-checks\filesystem.html">
+  <param name="ImageNumber" value="11">
+</OBJECT>
+<LI><OBJECT type="text/sitemap">
+  <param name="Name" value="Shortcuts">
+  <param name="Local" value="installation-checks\shortcuts.html">
+  <param name="ImageNumber" value="11">
+</OBJECT>
+<LI><OBJECT type="text/sitemap">
+  <param name="Name" value="Config Files">
+  <param name="Local" value="installation-checks\config-files.html">
+  <param name="ImageNumber" value="11">
+</OBJECT>
+<LI><OBJECT type="text/sitemap">
+  <param name="Name" value="Tray Icon/Menu">
+  <param name="Local" value="installation-checks\tray-icon-menu.html">
+  <param name="ImageNumber" value="11">
+</OBJECT>
+<LI><OBJECT type="text/sitemap">
+  <param name="Name" value="Processes">
+  <param name="Local" value="installation-checks\processes.html">
+  <param name="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<LI><OBJECT type="text/sitemap">
+  <param name="Name" value="Troubleshooting">
+  <param name="Local" value="troubleshooting.html">
+  <param name="ImageNumber" value="1">
+</OBJECT>
+<UL>
+<LI><OBJECT type="text/sitemap">
+  <param name="Name" value="Log files aren't generating/updating">
+  <param name="Local" value="troubleshooting\log-files-arent-generating-updating.html">
+  <param name="ImageNumber" value="11">
+</OBJECT>
+<LI><OBJECT type="text/sitemap">
+  <param name="Name" value="Dashboard doesn't show up in DBA">
+  <param name="Local" value="troubleshooting\dashboard-doesnt-show-up-in-dba.html">
+  <param name="ImageNumber" value="11">
+</OBJECT>
+<LI><OBJECT type="text/sitemap">
+  <param name="Name" value="PO screen access errors">
+  <param name="Local" value="troubleshooting\po-screen-access-errors.html">
+  <param name="ImageNumber" value="11">
+</OBJECT>
+</UL>
+</UL>
+</BODY>
+</HTML>
