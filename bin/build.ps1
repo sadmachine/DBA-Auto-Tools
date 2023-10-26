@@ -1,5 +1,6 @@
 Param(
-    [string]$BuildConfigPath = "$pwd\.build.ps1"
+    [string]$versionNumber = $null,
+    [string]$buildConfigPath = "$pwd\.build.ps1"
 )
 
 if (-not(Test-Path $buildConfigPath)) {
