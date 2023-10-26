@@ -17,6 +17,6 @@ if ($currentBranch -ne "main") {
 
 git add .
 git commit -m $args[1]
-git tag -a %~1 -m $args[1]
+git tag -a $args[0] -m $args[1]
 git push
 git push origin $args[0]
