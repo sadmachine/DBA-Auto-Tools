@@ -2,9 +2,9 @@
 $compiler = $Env:AHK_COMPILER;
 $binFile = $Env:AHK2_COMPILER_BINFILE;
 
-if ($args.count -ne 2) (
+if ($args.count -ne 2) {
   Write-Output "Usage: commit-version.ps1 <versionNumber> <commitMessage>"
-)
+}
 
 $currentBranch = git branch --show-current
 
