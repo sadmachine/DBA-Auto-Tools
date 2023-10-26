@@ -19,16 +19,15 @@
 #Include framework/ui/NoInput.ahk
 #Include framework/ui/WinWaitCloseMsgBox.ahk
 #Include local/ui/ReceiptQuantityDialog.ahk
-#Include <v2/DBA>
-#Include <v2/DotEnv>
-#Include <v2/Path>
 
 UI.Base.defaultFont := Map("options", "S12", "fontName", "Segoe UI")
 
-userValidatePost := true
+userValidatePost := IniRead("../settings.ini", "jobReceipts", "userValidatePost", 1)
+controlDelay := IniRead("../settings.ini", "jobReceipts", "controlDelay", 100)
+keyDelay := IniRead("../settings.ini", "jobReceipts", "keyDelay", 50)
 
-SetControlDelay(100)
-SetKeyDelay(50)
+SetControlDelay(controlDelay)
+SetKeyDelay(keyDelay)
 
 jobNumber := GetJobNumber()
 
@@ -67,39 +66,16 @@ ExitApp
 
 GetJobNumber()
 {
-    database := IniRead("../settings.ini", "firebird", "Database")
+    stringDialog := UI.StringDialog("Job Number")
+    stringDialog.setFont("S12")
 
+    result := stringDialog.prompt("Enter the Job #")
 
-    valid := false
-    while (!valid) {
-        stringDialog := UI.StringDialog("Job Number")
-        stringDialog.setFont("S12")
-
-        result := stringDialog.prompt("Enter the Job #")
-
-        if (result.canceled) {
-            ExitApp
-        }
-
-        jobNumber := result.value
-
-        DB := DBA.DbConnection(Map("dsn", "DBA"))
-        results := DB.query("SELECT jobno, jobstats FROM jobs WHERE jobno='" jobNumber "'")
-        results.Display()
-        if (results.count() < 1) {
-            MsgBox("The Job # you entered (" jobNumber ") is not valid, please enter another.", "Job # Error", "Icon!")
-            continue
-        }
-
-        result := results.row(1)
-        if (result["JOBSTATS"] != 'RELEASED') {
-            MsgBox("The Job # you entered (" jobNumber ") has status " results[1]["jobstats"] ", but status must be RELEASED.`nPlease release the job or try another Job #.", "Job # Error", "Icon!")
-            continue
-        }
-        valid := true
+    if (result.canceled) {
+        ExitApp
     }
 
-    return jobNumber
+    return result.value
 }
 
 GetQuantities()
@@ -149,14 +125,10 @@ EnterJobNumber(jobNumber)
     ControlGetPos(&posX, &posY, &width, &height, "TdxDBButtonEdit1", DBA.Windows.WIN_JOB_RECEIPTS)
     yClick := Integer(posY + height / 2)
     xClick := posX + width - 15
-    BlockInput("MouseMove")
     MouseMove(xClick, yClick)
     MouseClick
-    BlockInput("MouseMoveOff")
-    hwnd := WinWaitActive("ahk_class TfrmDropDownSubFrm")
-    WinExist(hwnd)
-    ControlSend(jobNumber)
-    ControlSend("{Enter}")
+    Send(jobNumber)
+    Send("{Enter}")
 }
 
 EnterQuantitiesAndLocations(quantities)
@@ -166,9 +138,11 @@ EnterQuantitiesAndLocations(quantities)
     while (!ControlExist("TdxDBGrid1", hwnd)) {
     }
     ControlFocus("TdxDBGrid1")
-    ControlSend(quantities["good"], "TdxDBGrid1")
+    ControlSend("{Enter}", "TdxDBGrid1")
+    ControlSend(quantities["good"], "TdxInplaceDBTreeListMaskEdit1")
     ControlSend("{Down}", "TdxDBGrid1")
-    ControlSend(quantities["scrap"], "TdxDBGrid1")
+    ControlSend("{Enter}", "TdxDBGrid1")
+    ControlSend(quantities["scrap"], "TdxInplaceDBTreeListMaskEdit1")
     ControlSend("{Tab}", "TdxDBGrid1")
     ControlSend("NCMR-", "TdxDBGrid1")
     ControlSend("{Enter}", "TdxDBGrid1")

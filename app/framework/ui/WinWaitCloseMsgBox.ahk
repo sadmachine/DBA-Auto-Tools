@@ -23,12 +23,14 @@ class WinWaitCloseMsgBox
 {
     guiObj := Object()
 
-    __New(message, winTitle, title := "", options := "+AlwaysOnTop +ToolWindow")
+    __New(message, winTitle, title := "", options := "+AlwaysOnTop -MinimizeBox")
     {
-        this.guiObj := Gui(options, title)
+        this.guiObj := Gui(options)
         this.guiObj.MarginX := 10 
-        this.guiObj.add("Text", "w236", message)
-        this.guiObj.show("w256")
+        this.guiObj.MarginX := 10 
+        this.guiObj.SetFont("S12")
+        this.guiObj.add("Text", "w280 Center", message)
+        this.guiObj.show("w300")
         WinWaitClose(winTitle)
         this.guiObj.destroy()
     }
