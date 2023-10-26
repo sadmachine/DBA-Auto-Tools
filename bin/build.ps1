@@ -1,5 +1,5 @@
 Param(
-    [string]$versionNumber,
+    [string]$versionNumber = $null,
     [string]$buildConfigPath = "$pwd\.build.ps1"
 )
 
@@ -12,8 +12,8 @@ if (-not(Test-Path $buildConfigPath)) {
 $compiler = $Env:AHK_COMPILER;
 $binFile = $Env:AHK2_COMPILER_BINFILE;
 
-if ($null -ne $args[0]) {
-    $currentVersion = $args[0];
+if ($null -ne $versionNumber) {
+    $currentVersion = $versionNumber;
 }
 else {
     $currentVersion = git describe --tags --abbrev=0
